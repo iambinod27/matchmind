@@ -1,16 +1,16 @@
 export interface Match {
   id: number;
-  homeTeam: { name: string; crest: string };
-  awayTeam: { name: string; crest: string };
+  homeTeam: { id: number; name: string; crest: string };
+  awayTeam: { id: number; name: string; crest: string };
   score: {
     fullTime: { home: number | null; away: number | null };
   };
   utcDate: string;
-  matchday: number;
+  matchday: number | null;
+  stage: string; // "GROUP_STAGE" | "LAST_16" | "QUARTER_FINALS" | "SEMI_FINALS" | "FINAL" | etc.
   status: string;
   competition: { name: string };
 }
-
 export interface PredictionResponse {
   team_a: string;
   team_b: string;
