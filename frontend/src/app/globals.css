@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #F7F5EF;
+  --surface: #FFFFFF;
+  --line: #E4E0D4;
+  --text: #14201A;
+  --muted: #6B7A70;
+  --accent: #C4791F;
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--line);
+}
+
+::selection {
+  background: var(--accent);
+  color: #F7F5EF;
+}
