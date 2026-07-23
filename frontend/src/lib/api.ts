@@ -11,6 +11,7 @@ export interface Match {
   status: string;
   competition: { name: string };
 }
+
 export interface PredictionResponse {
   team_a: string;
   team_b: string;
@@ -39,17 +40,23 @@ export interface StandingsGroup {
   table: StandingEntry[];
 }
 
-export async function getStandings(
-  competitionCode: string,
-): Promise<StandingsGroup[]> {
-  const res = await fetch(`http://localhost:8000/standings/${competitionCode}`);
+export interface League {
+  code: string;
+  name: string;
+  emblem: string;
+}
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+export async function getStandings(competitionCode: string): Promise<StandingsGroup[]> {
+  const res = await fetch(`${API_BASE}/standings/${competitionCode}`);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   const data = await res.json();
   return data.standings;
 }
 
 export async function getMatches(competitionCode: string): Promise<Match[]> {
-  const res = await fetch(`http://localhost:8000/matches/${competitionCode}`);
+  const res = await fetch(`${API_BASE}/matches/${competitionCode}`);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   const data = await res.json();
   return data.matches;
@@ -59,22 +66,15 @@ export async function predictMatch(
   competitionCode: string,
   matchId: number,
 ): Promise<PredictionResponse> {
-  const res = await fetch(
-    `http://localhost:8000/predict/${competitionCode}/${matchId}`,
-    { method: "GET" },
-  );
+  const res = await fetch(`${API_BASE}/predict/${competitionCode}/${matchId}`, {
+    method: "GET",
+  });
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   return res.json();
 }
 
-export interface League {
-  code: string;
-  name: string;
-  emblem: string;
-}
-
 export async function getCompetitions(): Promise<League[]> {
-  const res = await fetch("http://localhost:8000/competitions");
+  const res = await fetch(`${API_BASE}/competitions`);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   return res.json();
 }
