@@ -13,6 +13,12 @@ interface AnalysisResponse {
 }
 
 function FormGuide({ form }: { form: string }) {
+  if (!form || form === "No recent finished matches") {
+    return (
+      <p className="font-mono text-xs text-[#6B7A70]">No recent form data</p>
+    );
+  }
+
   const results = form.split(", ").map((entry) => entry.charAt(0));
   const colors: Record<string, string> = {
     W: "bg-[#2F8F4E] text-white",
@@ -24,7 +30,7 @@ function FormGuide({ form }: { form: string }) {
       {results.map((r, i) => (
         <span
           key={i}
-          className={`font-mono text-xs w-6 h-6 flex items-center justify-center rounded ${colors[r] ?? colors.D}`}
+          className={`font-mono text-xs w-6 h-6 flex items-center justify-center rounded ${colors[r] ?? "bg-gray-200 text-gray-500"}`}
         >
           {r}
         </span>
@@ -147,9 +153,16 @@ export default function MatchDetail() {
           <h2 className="font-mono text-xs text-[#C4791F] uppercase tracking-widest mb-3">
             Prediction
           </h2>
-          <p className="text-lg font-display leading-relaxed whitespace-pre-line text-[#14201A]">
-            {prediction!.prediction}
-          </p>
+          <div className="space-y-3">
+            {prediction!.prediction
+              .split("\n")
+              .filter(Boolean)
+              .map((line, i) => (
+                <p key={i} className="text-[#14201A] leading-relaxed">
+                  {line}
+                </p>
+              ))}
+          </div>
         </div>
       </div>
     </main>

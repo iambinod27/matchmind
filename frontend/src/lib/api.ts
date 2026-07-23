@@ -19,6 +19,35 @@ export interface PredictionResponse {
   prediction: string;
 }
 
+export interface StandingEntry {
+  position: number;
+  team: { id: number; name: string; crest: string };
+  playedGames: number;
+  won: number;
+  draw: number;
+  lost: number;
+  points: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDifference: number;
+}
+
+export interface StandingsGroup {
+  stage: string;
+  type: string;
+  group: string | null;
+  table: StandingEntry[];
+}
+
+export async function getStandings(
+  competitionCode: string,
+): Promise<StandingsGroup[]> {
+  const res = await fetch(`http://localhost:8000/standings/${competitionCode}`);
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  const data = await res.json();
+  return data.standings;
+}
+
 export async function getMatches(competitionCode: string): Promise<Match[]> {
   const res = await fetch(`http://localhost:8000/matches/${competitionCode}`);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);

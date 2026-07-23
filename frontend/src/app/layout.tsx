@@ -18,10 +18,20 @@ const titillium = Titillium_Web({
   variable: "--font-mono",
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${barlow.variable} ${inter.variable} ${titillium.variable}`}>
-      <body className="bg-[#F7F5EF] text-[#14201A] font-body antialiased">
+    <html
+      lang="en"
+      className={`${barlow.variable} ${inter.variable} ${titillium.variable}`}
+    >
+      <body
+        className="bg-[#F7F5EF] text-[#14201A] font-body antialiased"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
