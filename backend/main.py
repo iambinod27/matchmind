@@ -17,7 +17,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://your-app.vercel.app"],
+    allow_origins=["http://localhost:3000", "https://your-app.vercel.app", "https://matchmind-mu.vercel.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
